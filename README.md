@@ -100,7 +100,7 @@ The only external libraries you may use for this assignment are [GSON](https://g
 
 ## Submission
 
-1. Use the following link to create your private github repository for this assignment: [Project 1]()
+1. Use the following link to create your private github repository for this assignment: [Project 1](https://classroom.github.com/a/getaHnPN)
 2. For full credit, make sure to follow all [Style Guidelines](https://github.com/CS601-F18/notes/blob/master/admin/style.md). Points will be deducted for each violation.
 3. All code and the jar file described above must be submitted to your github repository by **Wednesday, September 19, 2018 - 11am**.
 4. There are no unit test cases provided for this project, but during interactive grading you will be expected to demonstrate your solution running on the Cell Phones and Accessories data. Make sure to test incorrect commands and searches for ASINs and terms that are not present in the data.
