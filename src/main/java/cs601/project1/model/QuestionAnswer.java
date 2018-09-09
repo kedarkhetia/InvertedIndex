@@ -1,5 +1,11 @@
 package cs601.project1.model;
 
+/**
+ * A class to represent each question answer as structure of 
+ * asin, questionType, question and answer.
+ * 
+ * @author kmkhetia
+ */
 public class QuestionAnswer extends AmazonDataStructure{
 	private String questionType;
 	private String question;

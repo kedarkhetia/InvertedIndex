@@ -1,5 +1,11 @@
 package cs601.project1.model;
 
+/**
+ * A class to represent each Review as structure of 
+ * asin, reviewerId, reviewText and OverallScore.
+ * 
+ * @author kmkhetia
+ */
 public class Review extends AmazonDataStructure{
 	private String reviewerID;
 	private String reviewText;

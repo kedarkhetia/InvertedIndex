@@ -11,10 +11,27 @@ import cs601.project1.model.QuestionAnswer;
 import cs601.project1.model.Review;
 import cs601.project1.model.Tuple;
 
+/**
+ * InvertedIndex class implements Inverted Index data structure
+ * which is used for efficient searching based on keywords. It supports
+ * operations such as add to InvertedIndex, find asin, search text and
+ * partially search text.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class InvertedIndex {
+	// Static map for find function which stores the documents based on ASIN as index key.
 	public static Map<String, List<AmazonDataStructure>> asinIndex = new HashMap<String, List<AmazonDataStructure>>();
+	// Map to store inverted index for any document.
 	private Map<String, List<Tuple<AmazonDataStructure>>> invertedIndex = new HashMap<String, List<Tuple<AmazonDataStructure>>>();
 	
+	/**
+	 * The operation helps to add document to invertedIndex and asinIndex
+	 * 
+	 * @param element
+	 * @return void
+	 */
 	public void add(AmazonDataStructure element) {
 		addToAsinIndex(element.getAsin(), element);
 		if(element instanceof Review) {
@@ -26,6 +43,14 @@ public class InvertedIndex {
 		}
 	}
 	
+	/**
+	 * The operation helps to add document to asinIndex if it 
+	 * doesn't exist, otherwise it updates the index with 
+	 * new document.
+	 * 
+	 * @param asin and element
+	 * @return void
+	 */
 	public void addToAsinIndex(String asin, AmazonDataStructure element) {
 		if(asinIndex.containsKey(asin)) {
 			if(!asinIndex.get(asin).contains(element)) {
@@ -39,6 +64,15 @@ public class InvertedIndex {
 		}
 	}
 	
+	/**
+	 * The operation helps to add document to invertedIndex if it 
+	 * doesn't exist, otherwise it updates the index with 
+	 * new document. It also calculates the frequency of each word
+	 * appearing in document.
+	 * 
+	 * @param text and element
+	 * @return void
+	 */
 	public void addToInvertedIndex(String text, AmazonDataStructure element) {
 		String[] splitText = text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase().split(" ");
 		Map<String, Integer> frequency = new HashMap<String, Integer>(); 
@@ -65,6 +99,13 @@ public class InvertedIndex {
 		}
 	}
 	
+	/**
+	 * The operation implements find operation on asinIndex 
+	 * for searching any document for given ASIN.
+	 * 
+	 * @param asin
+	 * @return void
+	 */
 	public static void find(String asin) {
 		int count = 1;
 		try {
@@ -77,6 +118,14 @@ public class InvertedIndex {
 		}
 	}
 	
+	/**
+	 * The operation implements search operation for a given text.
+	 * It prints documents that contains given word. It also sorts 
+	 * the output based on the frequency of the word in given document.
+	 * 
+	 * @param text
+	 * @return void
+	 */
 	public void search(String text) {
 		int count = 1;
 		try {
@@ -90,6 +139,15 @@ public class InvertedIndex {
 		}
 	}
 	
+	/**
+	 * The operation implements the partialsearch functionality.
+	 * It prints documents that contains either the entire word 
+	 * or even if the words are partially appearing in other words.
+	 * For example 'he' word appears in 'help'
+	 * 
+	 * @param text
+	 * @return void
+	 */
 	public void partialSearch(String text) {
 		int count = 1;
 		try {

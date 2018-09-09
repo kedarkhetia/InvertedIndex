@@ -1,5 +1,10 @@
 package cs601.project1.model;
 
+/**
+ * A class store each document along with the frequency of given word.
+ * 
+ * @author kmkhetia
+ */
 public class Tuple<e> implements Comparable<Tuple>{
 	private e object;
 	private int frequency;
