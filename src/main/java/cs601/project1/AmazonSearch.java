@@ -16,8 +16,28 @@ import cs601.project1.model.QuestionAnswer;
 import cs601.project1.model.Review;
 import cs601.project1.algorithms.InvertedIndex;
 
-public class AmazonReviews {
+/**
+ * AmazonReviews is a Driver Class. It implements functionalities like
+ * reading data from file, feeding data to invertedIndex and parsing
+ * the command input to perform appropriate operation.
+ * @author kmkhetia
+ *
+ */
 
+public class AmazonSearch {
+	/**
+	 * Main logic to read file, create invertedIndex and get command input from user.
+	 * 
+	 * Expected usage:
+	 * 	java -cp project1.jar cs601.project1.AmazonSearch -reviews <review_file_name> -qa <qa_file_name>
+	 * 
+	 * Example:
+	 * 	java cs601.project0.AmazonReviews -input movies.txt -output output.txt
+	 * 
+	 * @param args
+	 * @throws IOException 
+	 * @return void
+	 */
 	public static void main(String[] args) throws IOException {
 		int mill1 = (int) System.currentTimeMillis();
 		if(!validateInput(args)) {
