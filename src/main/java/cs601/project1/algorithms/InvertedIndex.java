@@ -80,8 +80,8 @@ public class InvertedIndex {
 	public void search(String text) {
 		int count = 1;
 		try {
-			Collections.sort(invertedIndex.get(text.toLowerCase()));
-			for(Tuple<AmazonDataStructure> i : invertedIndex.get(text)) {
+			Collections.sort(invertedIndex.get(text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase()));
+			for(Tuple<AmazonDataStructure> i : invertedIndex.get(text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase())) {
 				System.out.println(count + ") " + i);
 				count++;
 			}
@@ -94,12 +94,15 @@ public class InvertedIndex {
 		int count = 1;
 		try {
 			for(String i : invertedIndex.keySet()) {
-				if(i.contains(text.toLowerCase())) {
+				if(i.contains(text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase())) {
 					for(Tuple<AmazonDataStructure> j : invertedIndex.get(i)) {
 						System.out.println(count + ") " + j);
 						count++;
 					}
 				}
+			}
+			if(count == 1) {
+				throw new NullPointerException();
 			}
 		} catch (NullPointerException e) {
 			System.out.println("Apologies! Provided word did not return any search result, please try using different word.");
