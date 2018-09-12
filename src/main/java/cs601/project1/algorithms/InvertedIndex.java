@@ -21,7 +21,7 @@ import cs601.project1.model.Review;
  */
 public class InvertedIndex {
 	// Static map for find function which stores the documents based on ASIN as index key.
-	public static Map<String, List<AmazonDataStructure>> asinIndex = new HashMap<String, List<AmazonDataStructure>>();
+	private static Map<String, List<AmazonDataStructure>> asinIndex = new HashMap<String, List<AmazonDataStructure>>();
 	// Map to store inverted index for any document.
 	private Map<String, List<Tuple<AmazonDataStructure>>> invertedIndex = new HashMap<String, List<Tuple<AmazonDataStructure>>>();
 	
