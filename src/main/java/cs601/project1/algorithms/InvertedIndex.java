@@ -203,7 +203,6 @@ public class InvertedIndex {
 	public void search (String text) {
 		int count = 1;
 		try {
-			//Collections.sort(invertedIndex.get(text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase()));
 			for(Tuple<AmazonDataStructure> i : invertedIndex.get(text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase())) {
 				System.out.println(count + ") " + i);
 				count++;
