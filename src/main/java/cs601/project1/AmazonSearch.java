@@ -39,19 +39,20 @@ public class AmazonSearch {
 	 * @throws IOException 
 	 * @return void
 	 */
-	public static void main(String[] args) throws IOException {
-		int mill1 = (int) System.currentTimeMillis();
+	public static void main (String[] args) throws IOException {
 		if(!validateInput(args)) {
 			throw new IllegalArgumentException("Invalid parameters passed to program! use below command. \n java -cp project1.jar cs601.project1.AmazonSearch -reviews <review_file_name> -qa <qa_file_name> \n");
 		}
 		// Creates invertedIndex for review.
 		InvertedIndex reviewIndex = new InvertedIndex();
 		addToInvertedIndex(Paths.get(args[1]), Review.class, reviewIndex);
+		reviewIndex.sort();
+		
 		// Creates invertedIndex for question and answer.
 		InvertedIndex qaIndex = new InvertedIndex();
 		addToInvertedIndex(Paths.get(args[3]), QuestionAnswer.class, qaIndex);
-		int mill2 = (int) System.currentTimeMillis();
-		System.out.println("Time: " + ((mill2-mill1)/1000));
+		qaIndex.sort();
+		
 		Scanner scn = new Scanner(System.in);
 		boolean exitFlag = false; // sets exit flag to false.
 		while(!exitFlag) {
@@ -68,7 +69,7 @@ public class AmazonSearch {
 	 * @param args
 	 * @return boolean
 	 */
-	private static boolean validateInput(String[] args) {
+	private static boolean validateInput (String[] args) {
 		if((args.length != 4) || !args[0].equals("-reviews") || !args[2].equals("-qa")) {
 			return false;
 		}
@@ -83,7 +84,7 @@ public class AmazonSearch {
 	 * @param command, reviewIndex and qaIndex
 	 * @return boolean
 	 */
-	public static boolean parseCommand(String[] command, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
+	public static boolean parseCommand (String[] command, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
 		if((command.length < 2 && !(command[0].equals("help") || command[0].equals("exit"))) || command.length > 2) {
 			System.out.println("Invalid command! Please try using \'help\' command.");
 			return false;
@@ -111,7 +112,8 @@ public class AmazonSearch {
 						+ "\n\t2. reviewsearch <TextToSearch>"
 						+ "\n\t3. qasearch <TextToSearch>"
 						+ "\n\t4. reviewpartialsearch <TextToSearch>"
-						+ "\n\t5. qapartialsearch <TextToSearch>");
+						+ "\n\t5. qapartialsearch <TextToSearch>"
+						+ "\n\t6. exit");
 				return false;
 			case "exit":
 				System.out.println("Good Bye!");
@@ -129,7 +131,7 @@ public class AmazonSearch {
 	 * @throws IOException
 	 * @return void
 	 */
-	public static void addToInvertedIndex(Path inputFile, Class<?> template, InvertedIndex invertedIndex) throws IOException {
+	public static void addToInvertedIndex (Path inputFile, Class<?> template, InvertedIndex invertedIndex) throws IOException {
 		BufferedReader in = Files.newBufferedReader(inputFile, StandardCharsets.ISO_8859_1);
 		String data;
 		try {
@@ -138,7 +140,7 @@ public class AmazonSearch {
 				Object templateObject = gson.fromJson(data, template);
 				invertedIndex.add((AmazonDataStructure) templateObject);
 			}
-		} catch (JsonSyntaxException e) {
+		} catch(JsonSyntaxException e) {
 			//Ignoring JsonSyntaxException
 			//System.out.println(e.getMessage());
 		}

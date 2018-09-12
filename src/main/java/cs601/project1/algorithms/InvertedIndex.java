@@ -9,7 +9,6 @@ import java.util.Map;
 import cs601.project1.model.AmazonDataStructure;
 import cs601.project1.model.QuestionAnswer;
 import cs601.project1.model.Review;
-import cs601.project1.model.Tuple;
 
 /**
  * InvertedIndex class implements Inverted Index data structure
@@ -27,12 +26,75 @@ public class InvertedIndex {
 	private Map<String, List<Tuple<AmazonDataStructure>>> invertedIndex = new HashMap<String, List<Tuple<AmazonDataStructure>>>();
 	
 	/**
+	 * Tuple class is used to store the frequency of text
+	 * appearing in an object. It also implements comparable
+	 * interface for sorting objects of type tuple.
+	 * 
+	 * @author kmkhetia
+	 *
+	 */
+	static class Tuple<e> implements Comparable<Tuple>{
+		private e object;
+		private int frequency;
+		
+		/**
+		 * Sets the object value.
+		 * 
+		 * @param object
+		 * @return void
+		 */
+		public void setObject (e object) {
+			this.object = object;
+		}
+		
+		/**
+		 * Sets the frequency value.
+		 * 
+		 * @param frequency
+		 * @return void
+		 */
+		public void setFrequency (int frequency) {
+			this.frequency = frequency;
+		}
+		
+		/**
+		 * It compares two tuple values.
+		 * 
+		 * @param tuple
+		 * @return int
+		 */
+		@Override
+		public int compareTo (Tuple tuple) {
+			if(frequency == tuple.frequency) {
+				return 0;
+			}
+			else if(frequency > tuple.frequency) {
+				return -1;
+			}
+			else {
+				return 1;
+			}
+		}
+		
+		/**
+		 * The function returns the string representation of an object.
+		 * 
+		 * @return String
+		 */
+		@Override 
+		public String toString() {
+			return object.toString();
+		}
+		
+	}
+	
+	/**
 	 * The operation helps to add document to invertedIndex and asinIndex
 	 * 
 	 * @param element
 	 * @return void
 	 */
-	public void add(AmazonDataStructure element) {
+	public void add (AmazonDataStructure element) {
 		addToAsinIndex(element.getAsin(), element);
 		if(element instanceof Review) {
 			addToInvertedIndex(((Review) element).getReviewText(), element);
@@ -44,6 +106,19 @@ public class InvertedIndex {
 	}
 	
 	/**
+	 * This operation sorts documents based on 
+	 * the frequency of the word appering in that
+	 * document.
+	 * 
+	 * @return void
+	 */
+	public void sort() {
+		for(String i : invertedIndex.keySet()) {
+			Collections.sort(invertedIndex.get(i));
+		}
+	}
+	
+	/**
 	 * The operation helps to add document to asinIndex if it 
 	 * doesn't exist, otherwise it updates the index with 
 	 * new document.
@@ -51,7 +126,7 @@ public class InvertedIndex {
 	 * @param asin and element
 	 * @return void
 	 */
-	public void addToAsinIndex(String asin, AmazonDataStructure element) {
+	public void addToAsinIndex (String asin, AmazonDataStructure element) {
 		if(asinIndex.containsKey(asin)) {
 			if(!asinIndex.get(asin).contains(element)) {
 				asinIndex.get(asin).add(element);
@@ -73,7 +148,7 @@ public class InvertedIndex {
 	 * @param text and element
 	 * @return void
 	 */
-	public void addToInvertedIndex(String text, AmazonDataStructure element) {
+	public void addToInvertedIndex (String text, AmazonDataStructure element) {
 		String[] splitText = text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase().split(" ");
 		Map<String, Integer> frequency = new HashMap<String, Integer>(); 
 		for(String i : splitText) {
@@ -106,35 +181,34 @@ public class InvertedIndex {
 	 * @param asin
 	 * @return void
 	 */
-	public static void find(String asin) {
+	public static void find (String asin) {
 		int count = 1;
 		try {
 			for(Object i : asinIndex.get(asin)) {
 				System.out.println(count + ") " + i);
 				count++;
 			}
-		} catch (NullPointerException e) {
+		} catch(NullPointerException e) {
 			System.out.println("Apologies! Provided ASIN cannot be found, please try using different ASIN.");
 		}
 	}
 	
 	/**
 	 * The operation implements search operation for a given text.
-	 * It prints documents that contains given word. It also sorts 
-	 * the output based on the frequency of the word in given document.
+	 * It prints documents that contains given word. 
 	 * 
 	 * @param text
 	 * @return void
 	 */
-	public void search(String text) {
+	public void search (String text) {
 		int count = 1;
 		try {
-			Collections.sort(invertedIndex.get(text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase()));
+			//Collections.sort(invertedIndex.get(text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase()));
 			for(Tuple<AmazonDataStructure> i : invertedIndex.get(text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase())) {
 				System.out.println(count + ") " + i);
 				count++;
 			}
-		} catch (NullPointerException e) {
+		} catch(NullPointerException e) {
 			System.out.println("Apologies! Provided word does not exist in any document, please try using different word.");
 		}
 	}
@@ -148,7 +222,7 @@ public class InvertedIndex {
 	 * @param text
 	 * @return void
 	 */
-	public void partialSearch(String text) {
+	public void partialSearch (String text) {
 		int count = 1;
 		try {
 			for(String i : invertedIndex.keySet()) {
@@ -162,7 +236,7 @@ public class InvertedIndex {
 			if(count == 1) {
 				throw new NullPointerException();
 			}
-		} catch (NullPointerException e) {
+		} catch(NullPointerException e) {
 			System.out.println("Apologies! Provided word did not return any search result, please try using different word.");
 		}
 	}

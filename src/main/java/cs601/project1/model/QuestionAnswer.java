@@ -11,32 +11,75 @@ public class QuestionAnswer extends AmazonDataStructure{
 	private String question;
 	private String answer;
 	
-	QuestionAnswer(String questionType, String asin, String question, String answer) {
+	QuestionAnswer (String questionType, String asin, String question, String answer) {
 		this.questionType = questionType;
 		this.asin = asin;
 		this.question = question;
 		this.answer = answer;
 	}
 	
+	/**
+	 * Gets questionType value.
+	 * 
+	 * @return String
+	 */
 	public String getQuestionType() {
 		return questionType;
 	}
-	public void setQuestionType(String questionType) {
+	
+	/**
+	 * Sets questionType value.
+	 * 
+	 * @param questionType
+	 * @return void
+	 */
+	public void setQuestionType (String questionType) {
 		this.questionType = questionType;
 	}
+	
+	/**
+	 * Gets question value.
+	 * 
+	 * @return String
+	 */
 	public String getQuestion() {
 		return question;
 	}
-	public void setQuestion(String question) {
+	
+	/**
+	 * Sets question value.
+	 * 
+	 * @param question
+	 * @return void
+	 */
+	public void setQuestion (String question) {
 		this.question = question;
 	}
+	
+	/**
+	 * Gets answer value.
+	 * 
+	 * @return String
+	 */
 	public String getAnswer() {
 		return answer;
 	}
-	public void setAnswer(String answer) {
+	
+	/**
+	 * Sets answer value.
+	 * 
+	 * @param answer
+	 * @return void
+	 */
+	public void setAnswer (String answer) {
 		this.answer = answer;
 	}
 	
+	/**
+	 * Returns the string representation of QuestionAnswer Object.
+	 * 
+	 * @return String
+	 */
 	@Override
 	public String toString() {
 		return "ASIN: " + this.asin + "\nQuestion: " + this.question + "\nAnswer: " + this.answer + "\n";

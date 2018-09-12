@@ -9,10 +9,22 @@ package cs601.project1.model;
 public abstract class AmazonDataStructure {
 	String asin;
 
+	/**
+	 * Gets the asin value.
+	 * 
+	 * @return String
+	 */
 	public String getAsin() {
 		return asin;
 	}
-	public void setAsin(String asin) {
+	
+	/**
+	 * Sets the asin value.
+	 * 
+	 * @param asin
+	 * @return void
+	 */
+	public void setAsin (String asin) {
 		this.asin = asin;
 	}
 }
