@@ -23,7 +23,7 @@ import cs601.project1.algorithms.InvertedIndex;
  * 
  * @author kmkhetia
  *
- */
+ */ 
 
 public class AmazonSearch {
 	/**
@@ -33,16 +33,17 @@ public class AmazonSearch {
 	 * 	java -cp project1.jar cs601.project1.AmazonSearch -reviews <review_file_name> -qa <qa_file_name>
 	 * 
 	 * Example:
-	 * 	java -cp project1.jar cs601.project1.AmazonSearch -reviews  reviews_Cell_Phones_and_Accessories_5.json -qa qa_Cell_Phones_and_Accessories.json
+	 * 	java -cp project1.jar cs601.project1.AmazonSearch -reviews reviews_Cell_Phones_and_Accessories_5.json -qa qa_Cell_Phones_and_Accessories.json
 	 * 
 	 * @param args
-	 * @throws IOException 
+	 * @throws IOException, IllegalArgumentException
 	 * @return void
 	 */
-	public static void main (String[] args) throws IOException {
+	public static void main (String[] args) throws IOException, IllegalArgumentException {
 		if(!validateInput(args)) {
 			throw new IllegalArgumentException("Invalid parameters passed to program! use below command. \n java -cp project1.jar cs601.project1.AmazonSearch -reviews <review_file_name> -qa <qa_file_name> \n");
 		}
+		
 		// Creates invertedIndex for review.
 		InvertedIndex reviewIndex = new InvertedIndex();
 		addToInvertedIndex(Paths.get(args[1]), Review.class, reviewIndex);
@@ -52,7 +53,6 @@ public class AmazonSearch {
 		InvertedIndex qaIndex = new InvertedIndex();
 		addToInvertedIndex(Paths.get(args[3]), QuestionAnswer.class, qaIndex);
 		qaIndex.sort();
-		
 		Scanner scn = new Scanner(System.in);
 		boolean exitFlag = false; // sets exit flag to false.
 		while(!exitFlag) {
@@ -134,15 +134,15 @@ public class AmazonSearch {
 	public static void addToInvertedIndex (Path inputFile, Class<?> template, InvertedIndex invertedIndex) throws IOException {
 		BufferedReader in = Files.newBufferedReader(inputFile, StandardCharsets.ISO_8859_1);
 		String data;
-		try {
-			while((data = in.readLine()) != null) {
+		while((data = in.readLine()) != null) {
+			try{
 				Gson gson = new Gson();
 				Object templateObject = gson.fromJson(data, template);
 				invertedIndex.add((AmazonDataStructure) templateObject);
+			} catch(JsonSyntaxException e) {
+				//Ignoring JsonSyntaxException
+				//System.out.println(e.getMessage());
 			}
-		} catch(JsonSyntaxException e) {
-			//Ignoring JsonSyntaxException
-			//System.out.println(e.getMessage());
 		}
 	}
 }
