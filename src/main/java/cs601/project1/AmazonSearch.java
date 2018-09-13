@@ -1,6 +1,7 @@
 package cs601.project1;
 
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
@@ -32,29 +33,33 @@ public class AmazonSearch {
 	 * @throws IOException, IllegalArgumentException
 	 * @return void
 	 */
-	public static void main (String[] args) throws IOException, IllegalArgumentException {
+	public static void main(String[] args) throws IOException {
 		if(!validateInput(args)) {
-			throw new IllegalArgumentException("Invalid parameters passed to program! use below command. \n java -cp project1.jar cs601.project1.AmazonSearch -reviews <review_file_name> -qa <qa_file_name> \n");
+			System.out.println("Invalid parameters passed to program! use below command. \n java -cp project1.jar cs601.project1.AmazonSearch -reviews <review_file_name> -qa <qa_file_name> \n");
+			return;
 		}
 		
-		// Creates invertedIndex for review.
-		InvertedIndex reviewIndex = (new InvertedIndexBuilder())
-				.setFilePath(Paths.get(args[1]))
-				.setType(Review.class)
-				.build();
-		
-		// Creates invertedIndex for question and answer.
-		InvertedIndex qaIndex = (new InvertedIndexBuilder())
-				.setFilePath(Paths.get(args[3]))
-				.setType(QuestionAnswer.class)
-				.build();
-		
-		Scanner scn = new Scanner(System.in);
-		boolean exitFlag = false; // sets exit flag to false.
-		while(!exitFlag) {
-			System.out.print("\nCommand: ");
-			String command[] = scn.nextLine().split(" ");
-			exitFlag = parseCommand(command, reviewIndex, qaIndex);
+		try {
+			// Creates invertedIndex for review.
+			InvertedIndex reviewIndex = (new InvertedIndexBuilder())
+					.setFilePath(Paths.get(args[1]))
+					.setType(Review.class)
+					.build();
+			
+			// Creates invertedIndex for question and answer.
+			InvertedIndex qaIndex = (new InvertedIndexBuilder())
+					.setFilePath(Paths.get(args[3]))
+					.setType(QuestionAnswer.class)
+					.build();
+			Scanner scn = new Scanner(System.in);
+			boolean exitFlag = false; // sets exit flag to false.
+			while(!exitFlag) {
+				System.out.print("\nCommand: ");
+				String command[] = scn.nextLine().split(" ");
+				exitFlag = parseCommand(command, reviewIndex, qaIndex);
+			}
+		} catch (NoSuchFileException e) {
+			System.out.println("Filename " + e.getMessage() + " does not exist.");
 		}
 	}
 	
@@ -88,7 +93,7 @@ public class AmazonSearch {
 		// Uses the command passed and performs operations accordingly.
 		switch(command[0].toLowerCase()) {
 			case "find":
-				InvertedIndex.find(command[1]);
+				InvertedIndex.find(command[1].toUpperCase());
 				return false;
 			case "reviewsearch":
 				reviewIndex.search(command[1]);

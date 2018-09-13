@@ -166,7 +166,7 @@ public class InvertedIndex {
 				count++;
 			}
 		} catch(NullPointerException e) {
-			System.out.println("Apologies! Provided ASIN cannot be found, please try using different ASIN.");
+			System.out.println("Apologies! Provided ASIN is either not valid or cannot be found in any document, please try using different ASIN.");
 		}
 	}
 	
