@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cs601.project1.model.AmazonDataStructure;
-import cs601.project1.model.QuestionAnswer;
-import cs601.project1.model.Review;
 
 /**
  * InvertedIndex class implements Inverted Index data structure
@@ -89,19 +87,33 @@ public class InvertedIndex {
 	}
 	
 	/**
-	 * The operation helps to add document to invertedIndex and asinIndex
+	 * The operation helps to add document to invertedIndex. 
+	 * It sets the default value of frequency to 1.
 	 * 
-	 * @param element
+	 * @param text, element
 	 * @return void
 	 */
-	public void add (AmazonDataStructure element) {
-		addToAsinIndex(element.getAsin(), element);
-		if(element instanceof Review) {
-			addToInvertedIndex(((Review) element).getReviewText(), element);
+	public void add (String text, AmazonDataStructure element) {
+		add(text, element, 1);
+	}
+	
+	/**
+	 * The operation helps to add document to invertedIndex
+	 * 
+	 * @param text, element, frequency
+	 * @return void
+	 */
+	public void add (String text, AmazonDataStructure element, int frequency) {
+		Tuple<AmazonDataStructure> tuple = new Tuple<AmazonDataStructure>();
+		tuple.setObject(element);
+		tuple.setFrequency(frequency);
+		if(invertedIndex.containsKey(text)) {
+			invertedIndex.get(text).add(tuple);
 		}
-		else if(element instanceof QuestionAnswer) {
-			QuestionAnswer qa = (QuestionAnswer) element;
-			addToInvertedIndex(qa.getQuestion() + " " + qa.getAnswer(), element);
+		else {
+			List<Tuple<AmazonDataStructure>> list = new LinkedList<Tuple<AmazonDataStructure>>();
+			list.add(tuple);
+			invertedIndex.put(text, list);
 		}
 	}
 	
@@ -140,41 +152,6 @@ public class InvertedIndex {
 	}
 	
 	/**
-	 * The operation helps to add document to invertedIndex if it 
-	 * doesn't exist, otherwise it updates the index with 
-	 * new document. It also calculates the frequency of each word
-	 * appearing in document.
-	 * 
-	 * @param text and element
-	 * @return void
-	 */
-	public void addToInvertedIndex (String text, AmazonDataStructure element) {
-		String[] splitText = text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase().split(" ");
-		Map<String, Integer> frequency = new HashMap<String, Integer>(); 
-		for(String i : splitText) {
-			if(frequency.containsKey(i)) {
-				frequency.put(i, frequency.get(i) + 1);
-			}
-			else {
-				frequency.put(i, 1);
-			}
-		}
-		for(Map.Entry<String, Integer> i : frequency.entrySet()) {
-			Tuple<AmazonDataStructure> tuple = new Tuple<AmazonDataStructure>();
-			tuple.setObject(element);
-			tuple.setFrequency(i.getValue());
-			if(invertedIndex.containsKey(i.getKey())) {
-				invertedIndex.get(i.getKey()).add(tuple);
-			}
-			else {
-				List<Tuple<AmazonDataStructure>> list = new LinkedList<Tuple<AmazonDataStructure>>();
-				list.add(tuple);
-				invertedIndex.put(i.getKey(), list);
-			}
-		}
-	}
-	
-	/**
 	 * The operation implements find operation on asinIndex 
 	 * for searching any document for given ASIN.
 	 * 
@@ -184,7 +161,7 @@ public class InvertedIndex {
 	public static void find (String asin) {
 		int count = 1;
 		try {
-			for(Object i : asinIndex.get(asin)) {
+			for(AmazonDataStructure i : asinIndex.get(asin)) {
 				System.out.println(count + ") " + i);
 				count++;
 			}

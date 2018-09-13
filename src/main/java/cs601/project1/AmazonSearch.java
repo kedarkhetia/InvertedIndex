@@ -1,20 +1,13 @@
 package cs601.project1;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-
-import cs601.project1.model.AmazonDataStructure;
 import cs601.project1.model.QuestionAnswer;
 import cs601.project1.model.Review;
 import cs601.project1.algorithms.InvertedIndex;
+import cs601.project1.builder.InvertedIndexBuilder;
 
 /**
  * AmazonReviews is a Driver Class. It implements functionalities like
@@ -45,14 +38,17 @@ public class AmazonSearch {
 		}
 		
 		// Creates invertedIndex for review.
-		InvertedIndex reviewIndex = new InvertedIndex();
-		addToInvertedIndex(Paths.get(args[1]), Review.class, reviewIndex);
-		reviewIndex.sort();
+		InvertedIndex reviewIndex = (new InvertedIndexBuilder())
+				.setFilePath(Paths.get(args[1]))
+				.setType(Review.class)
+				.build();
 		
 		// Creates invertedIndex for question and answer.
-		InvertedIndex qaIndex = new InvertedIndex();
-		addToInvertedIndex(Paths.get(args[3]), QuestionAnswer.class, qaIndex);
-		qaIndex.sort();
+		InvertedIndex qaIndex = (new InvertedIndexBuilder())
+				.setFilePath(Paths.get(args[3]))
+				.setType(QuestionAnswer.class)
+				.build();
+		
 		Scanner scn = new Scanner(System.in);
 		boolean exitFlag = false; // sets exit flag to false.
 		while(!exitFlag) {
@@ -85,12 +81,12 @@ public class AmazonSearch {
 	 * @return boolean
 	 */
 	public static boolean parseCommand (String[] command, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
-		if((command.length < 2 && !(command[0].equals("help") || command[0].equals("exit"))) || command.length > 2) {
+		if((command.length < 2 && !(command[0].toLowerCase().equals("help") || command[0].toLowerCase().equals("exit"))) || command.length > 2) {
 			System.out.println("Invalid command! Please try using \'help\' command.");
 			return false;
 		}
 		// Uses the command passed and performs operations accordingly.
-		switch(command[0]) {
+		switch(command[0].toLowerCase()) {
 			case "find":
 				InvertedIndex.find(command[1]);
 				return false;
@@ -121,28 +117,6 @@ public class AmazonSearch {
 			default:
 				System.out.println("not a valid command, try using \'help\' command.");
 				return false;
-		}
-	}
-	
-	/**
-	 * The function adds document to inverted index from file. 
-	 * 
-	 * @param inputFile, template class, invertedIndex
-	 * @throws IOException
-	 * @return void
-	 */
-	public static void addToInvertedIndex (Path inputFile, Class<?> template, InvertedIndex invertedIndex) throws IOException {
-		BufferedReader in = Files.newBufferedReader(inputFile, StandardCharsets.ISO_8859_1);
-		String data;
-		while((data = in.readLine()) != null) {
-			try{
-				Gson gson = new Gson();
-				Object templateObject = gson.fromJson(data, template);
-				invertedIndex.add((AmazonDataStructure) templateObject);
-			} catch(JsonSyntaxException e) {
-				//Ignoring JsonSyntaxException
-				//System.out.println(e.getMessage());
-			}
 		}
 	}
 }
