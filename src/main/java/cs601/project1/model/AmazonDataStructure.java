@@ -14,7 +14,7 @@ public abstract class AmazonDataStructure {
 	 * 
 	 * @return String
 	 */
-	public String getAsin() {
+	public String getAsin(){
 		return asin;
 	}
 	
@@ -24,7 +24,7 @@ public abstract class AmazonDataStructure {
 	 * @param asin
 	 * @return void
 	 */
-	public void setAsin (String asin) {
+	public void setAsin(String asin) {
 		this.asin = asin;
 	}
 }

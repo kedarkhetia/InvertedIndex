@@ -41,7 +41,7 @@ public class InvertedIndex {
 		 * @param object
 		 * @return void
 		 */
-		public void setObject (e object) {
+		public void setObject(e object) {
 			this.object = object;
 		}
 		
@@ -51,7 +51,7 @@ public class InvertedIndex {
 		 * @param frequency
 		 * @return void
 		 */
-		public void setFrequency (int frequency) {
+		public void setFrequency(int frequency) {
 			this.frequency = frequency;
 		}
 		
@@ -62,7 +62,7 @@ public class InvertedIndex {
 		 * @return int
 		 */
 		@Override
-		public int compareTo (Tuple tuple) {
+		public int compareTo(Tuple tuple) {
 			if(frequency == tuple.frequency) {
 				return 0;
 			}
@@ -80,7 +80,7 @@ public class InvertedIndex {
 		 * @return String
 		 */
 		@Override 
-		public String toString() {
+		public String toString(){
 			return object.toString();
 		}
 		
@@ -93,7 +93,7 @@ public class InvertedIndex {
 	 * @param text, element
 	 * @return void
 	 */
-	public void add (String text, AmazonDataStructure element) {
+	public void add(String text, AmazonDataStructure element) {
 		add(text, element, 1);
 	}
 	
@@ -103,7 +103,7 @@ public class InvertedIndex {
 	 * @param text, element, frequency
 	 * @return void
 	 */
-	public void add (String text, AmazonDataStructure element, int frequency) {
+	public void add(String text, AmazonDataStructure element, int frequency) {
 		Tuple<AmazonDataStructure> tuple = new Tuple<AmazonDataStructure>();
 		tuple.setObject(element);
 		tuple.setFrequency(frequency);
@@ -124,7 +124,7 @@ public class InvertedIndex {
 	 * 
 	 * @return void
 	 */
-	public void sort() {
+	public void sort(){
 		for(String i : invertedIndex.keySet()) {
 			Collections.sort(invertedIndex.get(i));
 		}
@@ -138,7 +138,7 @@ public class InvertedIndex {
 	 * @param asin and element
 	 * @return void
 	 */
-	public void addToAsinIndex (String asin, AmazonDataStructure element) {
+	public void addToAsinIndex(String asin, AmazonDataStructure element) {
 		if(asinIndex.containsKey(asin)) {
 			if(!asinIndex.get(asin).contains(element)) {
 				asinIndex.get(asin).add(element);
@@ -158,7 +158,7 @@ public class InvertedIndex {
 	 * @param asin
 	 * @return void
 	 */
-	public static void find (String asin) {
+	public static void find(String asin) {
 		int count = 1;
 		try {
 			for(AmazonDataStructure i : asinIndex.get(asin)) {
@@ -177,7 +177,7 @@ public class InvertedIndex {
 	 * @param text
 	 * @return void
 	 */
-	public void search (String text) {
+	public void search(String text) {
 		int count = 1;
 		try {
 			for(Tuple<AmazonDataStructure> i : invertedIndex.get(text.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase())) {
@@ -198,7 +198,7 @@ public class InvertedIndex {
 	 * @param text
 	 * @return void
 	 */
-	public void partialSearch (String text) {
+	public void partialSearch(String text) {
 		int count = 1;
 		try {
 			for(String i : invertedIndex.keySet()) {

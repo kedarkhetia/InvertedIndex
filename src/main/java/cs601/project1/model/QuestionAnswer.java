@@ -11,7 +11,7 @@ public class QuestionAnswer extends AmazonDataStructure{
 	private String question;
 	private String answer;
 	
-	QuestionAnswer (String questionType, String asin, String question, String answer) {
+	QuestionAnswer(String questionType, String asin, String question, String answer) {
 		this.questionType = questionType;
 		this.asin = asin;
 		this.question = question;
@@ -23,7 +23,7 @@ public class QuestionAnswer extends AmazonDataStructure{
 	 * 
 	 * @return String
 	 */
-	public String getQuestionType() {
+	public String getQuestionType(){
 		return questionType;
 	}
 	
@@ -33,7 +33,7 @@ public class QuestionAnswer extends AmazonDataStructure{
 	 * @param questionType
 	 * @return void
 	 */
-	public void setQuestionType (String questionType) {
+	public void setQuestionType(String questionType) {
 		this.questionType = questionType;
 	}
 	
@@ -42,7 +42,7 @@ public class QuestionAnswer extends AmazonDataStructure{
 	 * 
 	 * @return String
 	 */
-	public String getQuestion() {
+	public String getQuestion(){
 		return question;
 	}
 	
@@ -52,7 +52,7 @@ public class QuestionAnswer extends AmazonDataStructure{
 	 * @param question
 	 * @return void
 	 */
-	public void setQuestion (String question) {
+	public void setQuestion(String question) {
 		this.question = question;
 	}
 	
@@ -61,7 +61,7 @@ public class QuestionAnswer extends AmazonDataStructure{
 	 * 
 	 * @return String
 	 */
-	public String getAnswer() {
+	public String getAnswer(){
 		return answer;
 	}
 	
@@ -71,7 +71,7 @@ public class QuestionAnswer extends AmazonDataStructure{
 	 * @param answer
 	 * @return void
 	 */
-	public void setAnswer (String answer) {
+	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
 	
@@ -81,7 +81,7 @@ public class QuestionAnswer extends AmazonDataStructure{
 	 * @return String
 	 */
 	@Override
-	public String toString() {
+	public String toString(){
 		return "ASIN: " + this.asin + "\nQuestion: " + this.question + "\nAnswer: " + this.answer + "\n";
 	}
 }

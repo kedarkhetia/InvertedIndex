@@ -11,7 +11,7 @@ public class Review extends AmazonDataStructure{
 	private String reviewText;
 	private double overall;
 	
-	Review (String reviewerID, String asin, String reviewText, double overall) {
+	Review(String reviewerID, String asin, String reviewText, double overall) {
 		this.reviewerID = reviewerID;
 		this.asin = asin;
 		this.reviewText = reviewText;
@@ -33,7 +33,7 @@ public class Review extends AmazonDataStructure{
 	 * @param reviewerID
 	 * @return void
 	 */
-	public void setReviewerID (String reviewerID) {
+	public void setReviewerID(String reviewerID) {
 		this.reviewerID = reviewerID;
 	}
 	
@@ -42,7 +42,7 @@ public class Review extends AmazonDataStructure{
 	 * 
 	 * @return String
 	 */
-	public String getReviewText() {
+	public String getReviewText(){
 		return reviewText;
 	}
 	
@@ -52,7 +52,7 @@ public class Review extends AmazonDataStructure{
 	 * @param reviewText
 	 * @return void
 	 */
-	public void setReviewText (String reviewText) {
+	public void setReviewText(String reviewText) {
 		this.reviewText = reviewText;
 	}
 	
@@ -61,7 +61,7 @@ public class Review extends AmazonDataStructure{
 	 * 
 	 * @return double
 	 */
-	public double getOverall() {
+	public double getOverall(){
 		return overall;
 	}
 	
@@ -71,7 +71,7 @@ public class Review extends AmazonDataStructure{
 	 * @param overall
 	 * @return void
 	 */
-	public void setOverall (double overall) {
+	public void setOverall(double overall) {
 		this.overall = overall;
 	}
 	
@@ -81,7 +81,7 @@ public class Review extends AmazonDataStructure{
 	 * @return String
 	 */
 	@Override
-	public String toString() {
+	public String toString(){
 		return "ASIN: " + this.asin + "\nReviewId: " + this.reviewerID + "\nReviewText: " + this.reviewText + "\nOverall: " + this.overall + "\n";
 	}
 }

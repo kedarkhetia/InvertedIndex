@@ -70,7 +70,7 @@ public class AmazonSearch {
 	 * @param args
 	 * @return boolean
 	 */
-	private static boolean validateInput (String[] args) {
+	private static boolean validateInput(String[] args) {
 		if((args.length != 4) || !args[0].equals("-reviews") || !args[2].equals("-qa")) {
 			return false;
 		}
@@ -85,7 +85,7 @@ public class AmazonSearch {
 	 * @param command, reviewIndex and qaIndex
 	 * @return boolean
 	 */
-	public static boolean parseCommand (String[] command, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
+	public static boolean parseCommand(String[] command, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
 		if((command.length < 2 && !(command[0].toLowerCase().equals("help") || command[0].toLowerCase().equals("exit"))) || command.length > 2) {
 			System.out.println("Invalid command! Please try using \'help\' command.");
 			return false;
