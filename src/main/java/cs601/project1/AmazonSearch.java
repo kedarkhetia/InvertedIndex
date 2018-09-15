@@ -3,10 +3,13 @@ package cs601.project1;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 
+import cs601.project1.model.AmazonDataStructure;
 import cs601.project1.model.QuestionAnswer;
 import cs601.project1.model.Review;
+import cs601.project1.model.Tuple;
 import cs601.project1.algorithms.InvertedIndex;
 import cs601.project1.builder.InvertedIndexBuilder;
 
@@ -93,19 +96,19 @@ public class AmazonSearch {
 		// Uses the command passed and performs operations accordingly.
 		switch(command[0].toLowerCase()) {
 			case "find":
-				InvertedIndex.find(command[1].toUpperCase());
+				displayAsin(InvertedIndex.find(command[1].toUpperCase()));
 				return false;
 			case "reviewsearch":
-				reviewIndex.search(command[1]);
+				display(reviewIndex.search(command[1]));
 				return false;
 			case "reviewpartialsearch":
-				reviewIndex.partialSearch(command[1]);
+				display(reviewIndex.partialSearch(command[1]));
 				return false;
 			case "qasearch":
-				qaIndex.search(command[1]);
+				display(qaIndex.search(command[1]));
 				return false;
 			case "qapartialsearch":
-				qaIndex.partialSearch(command[1]);
+				display(qaIndex.partialSearch(command[1]));
 				return false;
 			case "help":
 				System.out.println("List of valid commands:"
@@ -122,6 +125,43 @@ public class AmazonSearch {
 			default:
 				System.out.println("not a valid command, try using \'help\' command.");
 				return false;
+		}
+	}
+	
+	/**
+	 * The function displays the list of ASINs.
+	 * 
+	 * @param command, reviewIndex and qaIndex
+	 * @return boolean
+	 */
+	public static void displayAsin(List<AmazonDataStructure> list) {
+		int count = 1;
+		if(list == null) {
+			System.out.println("Apologies! Provided ASIN does not exist in any document, please try using different ASIN.");
+			return;
+		}
+		for(AmazonDataStructure i : list) {
+			System.out.println(count + ". " + i);
+			count++;
+		}
+	}
+	
+	/**
+	 * The function displays the list of Review
+	 * and QA Objects.
+	 * 
+	 * @param command, reviewIndex and qaIndex
+	 * @return boolean
+	 */
+	public static void display(List<Tuple<AmazonDataStructure>> list) {
+		int count = 1;
+		if(list == null || list.isEmpty()) {
+			System.out.println("Apologies! Provided word does not exist in any document, please try using different word.");
+			return;
+		}
+		for(Tuple<AmazonDataStructure> i : list) {
+			System.out.println(count + ". " + i);
+			count++;
 		}
 	}
 }
