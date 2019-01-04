@@ -84,4 +84,9 @@ public class Review extends AmazonDataStructure{
 	public String toString(){
 		return "ASIN: " + this.asin + "\nReviewId: " + this.reviewerID + "\nReviewText: " + this.reviewText + "\nOverall: " + this.overall + "\n";
 	}
+
+	@Override
+	public String getText() {
+		return getReviewText();
+	}
 }

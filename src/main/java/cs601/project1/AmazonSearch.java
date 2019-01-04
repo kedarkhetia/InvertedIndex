@@ -61,6 +61,7 @@ public class AmazonSearch {
 				String command[] = scn.nextLine().split(" ");
 				exitFlag = parseCommand(command, reviewIndex, qaIndex);
 			}
+			scn.close();
 		} catch (NoSuchFileException e) {
 			System.out.println("Filename " + e.getMessage() + " does not exist.");
 		}

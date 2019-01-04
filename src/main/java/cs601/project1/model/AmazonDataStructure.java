@@ -27,4 +27,12 @@ public abstract class AmazonDataStructure {
 	public void setAsin(String asin) {
 		this.asin = asin;
 	}
+	
+	/**
+	 * Gets the text based on which inverted
+	 * index needs to be built.
+	 * 
+	 * @return String
+	 */
+	public abstract String getText();
 }

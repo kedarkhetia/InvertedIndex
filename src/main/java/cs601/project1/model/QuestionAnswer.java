@@ -84,4 +84,9 @@ public class QuestionAnswer extends AmazonDataStructure{
 	public String toString(){
 		return "ASIN: " + this.asin + "\nQuestion: " + this.question + "\nAnswer: " + this.answer + "\n";
 	}
+
+	@Override
+	public String getText() {
+		return getQuestion() + " " + getAnswer();
+	}
 }

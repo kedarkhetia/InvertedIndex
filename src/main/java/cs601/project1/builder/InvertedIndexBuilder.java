@@ -13,8 +13,6 @@ import com.google.gson.JsonSyntaxException;
 
 import cs601.project1.algorithms.InvertedIndex;
 import cs601.project1.model.AmazonDataStructure;
-import cs601.project1.model.QuestionAnswer;
-import cs601.project1.model.Review;
 
 /**
  * InvertedIndexBuilder class is used to build/create inverted index.
@@ -64,12 +62,7 @@ public class InvertedIndexBuilder {
 				Object templateObject = gson.fromJson(data, type);
 				AmazonDataStructure element = (AmazonDataStructure) templateObject;
 				invertedIndex.addToAsinIndex(element.getAsin(), element);
-				if(element instanceof Review) {
-					addReviewToInvertedIndex((Review) element);
-				}
-				else {
-					addQAToInvertedIndex((QuestionAnswer) element);
-				}
+				addToInvertedIndex(element);
 			} catch(JsonSyntaxException e) {
 				//Ignoring JsonSyntaxException
 				//System.out.println(e.getMessage());
@@ -80,24 +73,12 @@ public class InvertedIndexBuilder {
 	}
 
 	/**
-	 * The operation helps to add QA element to inverted index.
+	 * The operation helps to add elements to inverted index.
 	 * 
 	 * @param element
 	 */
-	private void addQAToInvertedIndex(QuestionAnswer element) {
-		Map<String, Integer> frequencyMap = getFrequency(element.getQuestion() + " " + element.getAnswer());
-		for(String i : frequencyMap.keySet()) {
-			invertedIndex.add(i, element, frequencyMap.get(i));
-		}
-	}
-	
-	/**
-	 * The operation helps to add Review element to inverted index.
-	 * 
-	 * @param element
-	 */
-	private void addReviewToInvertedIndex(Review element) {
-		Map<String, Integer> frequencyMap = getFrequency(element.getReviewText());
+	private void addToInvertedIndex(AmazonDataStructure element) {
+		Map<String, Integer> frequencyMap = getFrequency(element.getText());
 		for(String i : frequencyMap.keySet()) {
 			invertedIndex.add(i, element, frequencyMap.get(i));
 		}
