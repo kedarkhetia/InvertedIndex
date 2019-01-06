@@ -1,8 +1,6 @@
 InvertedIndex - Amazon Review and Q&A Search
 ===========================================
 
-### Due - Wednesday, September 19, 2018 - 11am
-
 In this project, I have implemented a program to allow searching of a database of Amazon reviews and Q&A content. I uses the following concepts:
 
 - Efficient data structures
