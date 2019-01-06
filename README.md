@@ -16,7 +16,7 @@ Download the [5-core Cell Phones and Accessories review](http://snap.stanford.ed
 
 ### InvertedIndex
 
-I have create an `InvertedIndex` data structure and use *two* instances of it. The first holds the data from the review dataset described above, and the second holds the data from the Q&A dataset described above. 
+I have created an `InvertedIndex` data structure and used *two* instances of it. The first holds the data from the review dataset described above, and the second holds the data from the Q&A dataset described above. 
 
 An [inverted index](https://en.wikipedia.org/wiki/Inverted_index) (also see [this page](https://nlp.stanford.edu/IR-book/html/htmledition/a-first-take-at-building-an-inverted-index-1.html)) is a common data structure used for searching documents. It maps terms to the documents where those terms appear. This makes it easy to search for a term and get back a list of documents that contain the word.
 
